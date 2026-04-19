@@ -9,6 +9,7 @@ OpenFlight is a DIY golf launch monitor using the OPS243-A Doppler radar and K-L
 ## Development Rules
 
 - **Always use `uv` for Python commands.** Use `uv run` to execute Python tools (pytest, pylint, ruff, etc.). Never use bare `python`, `pip`, `pytest`, etc.
+- **Windows dev setup:** `uv sync` fails on Windows because `picamera2` pulls in `python-prctl` (Linux-only). Instead, set up with: `uv pip install -e ".[ui,kld7,analysis]" && uv pip install pytest pylint ruff`. Then run tests directly: `.venv/Scripts/pytest tests/ -v` (do not use `uv run pytest` — it triggers sync).
 - **Update `pyproject.toml` when adding dependencies.** If new Python packages are introduced, add them to the appropriate dependency list in `pyproject.toml`.
 - **Bug reports: write a failing test first.** When the user reports a bug, write a test that reproduces and confirms the bug before investigating or fixing it.
 - **Default startup is `scripts/start-kiosk.sh`.** Assume the project is started via this script unless told otherwise. It handles venv activation, UI build, and server launch.
